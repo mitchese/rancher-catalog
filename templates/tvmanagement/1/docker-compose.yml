@@ -1,0 +1,67 @@
+version: '2'
+volumes:
+  mediaxbmc:
+    external: true
+    driver: rancher-nfs
+  radarr:
+    external: true
+    driver: rancher-nfs
+  sonarr:
+    external: true
+    driver: rancher-nfs
+  sabnzb-config:
+    external: true
+    driver: rancher-nfs
+  sabnzb-incomplete:
+    external: true
+    driver: rancher-nfs
+  sabnzb-downloads:
+    external: true
+    driver: rancher-nfs
+services:
+  sabnzb:
+    image: linuxserver/sabnzbd
+    environment:
+      PUID: '1001'
+      TZ: Europe/Berlin
+    stdin_open: true
+    volumes:
+    - sabnzb-config:/config
+    - sabnzb-downloads:/downloads
+    - sabnzb-incomplete:/incomplete-downloads
+    tty: true
+    ports:
+    - 8080:8080/tcp
+    - 9090:9090/tcp
+    labels:
+      io.rancher.container.pull_image: always
+  radar:
+    image: linuxserver/radarr
+    environment:
+      PUID: '1001'
+      TZ: Europe/Berlin
+    stdin_open: true
+    volumes:
+    - radarr:/config
+    - sabnzb-downloads:/downloads
+    - mediaxbmc:/movies
+    tty: true
+    links:
+    - sabnzb:sabnzb
+    labels:
+      io.rancher.container.pull_image: always
+  sonarr:
+    image: linuxserver/sonarr
+    environment:
+      PUID: '1001'
+      TZ: Europe/Berlin
+    stdin_open: true
+    volumes:
+    - sonarr:/config
+    - sabnzb-downloads:/downloads
+    - mediaxbmc:/tv
+    tty: true
+    links:
+    - sabnzb:sabnzb
+    labels:
+      io.rancher.container.pull_image: always
