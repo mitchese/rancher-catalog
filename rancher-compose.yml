@@ -1,0 +1,11 @@
+version: '2'
+services:
+  sabnzb:
+    scale: 1
+    start_on_create: true
+  radar:
+    scale: 1
+    start_on_create: true
+  sonarr:
+    scale: 1
+    start_on_create: true
