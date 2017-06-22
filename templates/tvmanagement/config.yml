@@ -1,0 +1,8 @@
+name: TV Management
+description: |
+  This is everything to do with TV/Media catalog management
+version: 0.1
+category: # Category to be used for searching catalog entries
+maintainer: Sean
+license: # The license
+projectURL: # A URL related to the catalog entry
