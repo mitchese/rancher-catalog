@@ -1,4 +1,11 @@
 version: '2'
+catalog:
+  name: TV Management 1.0
+  version: 1.0
+  description: sonarr, radarr, sab and other tv related 
+  minimum_rancher_version: 1.6.0
+  upgrade_from: # The previous versions that this template can be upgraded from
+  questions: #Used to request user input for configuration options
 services:
   sabnzb:
     scale: 1
